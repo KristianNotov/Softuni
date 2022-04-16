@@ -1,0 +1,31 @@
+import re
+words = input()
+pattern = r"#([A-Za-z]{3,})##([A-Za-z]{3,})#|@([A-Za-z]{3,})@@([A-Za-z]{3,})@"
+matches = re.findall(pattern , words)
+special_elements = []
+normal = []
+for match in matches:
+    element = [el for el in match if el  != '']
+    element1 = element[0]
+    element2 = element[1]
+    case = '<=>'
+    if element1 == element2[::-1]:
+        special_elements.append([element1,element2])
+
+    else:
+        normal.append(element1)
+
+if len(normal) <= 0 and len(special_elements) <= 0:
+    print(f'No word pairs found!')
+    print(f'No mirror words!')
+
+elif len(normal) > 0 and len(special_elements) <= 0:
+    print(f"{len(normal)} word pairs found!")
+    print(f'No mirror words!')
+
+else:
+    print(f"{len(normal) + len(special_elements)} word pairs found!")
+    print(f'The mirror words are:')
+    # we join it becouse at the end we don't need a comma
+    new = [' <=> '.join(el) for el in special_elements if el != '']
+    print(', '.join(new))
